@@ -11,15 +11,20 @@ import java.io.FileOutputStream;
 
 public class Main {
 
-    private static final int width = 32;
-    private static final int height = 32;
-
     public static void main(String[] args) {
 
         try {
 
             Path path = Paths.get("/home/nathaniel/IdeaProjects/ColorPaletteArt/src/art.txt");
             byte[] data = Files.readAllBytes(path);
+
+            int height = (int) Math.ceil(Math.sqrt(data.length/3));
+            int width = height;
+            while(width*height>data.length/3)
+            {
+                width = width-1;
+            }
+            width=width+1;
 
             BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
 
@@ -32,11 +37,11 @@ public class Main {
                 for(int j = 0; j < width; j++) {
                     // Pull out 4 bytes and generate colour int;
                     // This entire statement depends on bytesPerPixel;
-                    int pixelVal1 = Byte.toUnsignedInt(data[bI]);
-                    int pixelVal2 = Byte.toUnsignedInt(data[bI+1]);
-                    int pixelVal3 = Byte.toUnsignedInt(data[bI+2]);
+                    int pixelVal1 = bI < data.length ? Byte.toUnsignedInt(data[bI]) : 0;
+                    int pixelVal2 = bI+1 < data.length ? Byte.toUnsignedInt(data[bI+1]) : 0;
+                    int pixelVal3 = bI+2 < data.length ? Byte.toUnsignedInt(data[bI+2]) : 0;
                     int rgb=new Color(pixelVal1,pixelVal2,pixelVal3).getRGB();
-                    image.setRGB(i, j, rgb);
+                    image.setRGB(j,i, rgb);
                     bI=bI+3;
                 }
             }
@@ -51,12 +56,12 @@ public class Main {
             bI=0;
             for (int y = 0; y < originalImage.getHeight(); y++) {
                 for (int x = 0; x < originalImage.getWidth(); x++) {
-                    int  clr   = originalImage.getRGB(y,x);
-                    Color c = new Color(originalImage.getRGB(y,x));
+                    int  clr   = originalImage.getRGB(x,y);
+                    Color c = new Color(originalImage.getRGB(x,y));
                     recoveredBytes[bI] = (byte) c.getRed();
                     recoveredBytes[bI+1] = (byte) c.getGreen();
                     recoveredBytes[bI+2] =  (byte) c.getBlue();
-                    originalImage.setRGB(y,x, clr);
+                    originalImage.setRGB(x,y, clr);
                     bI=bI+3;
                 }
             }
