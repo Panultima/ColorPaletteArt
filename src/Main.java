@@ -6,6 +6,8 @@ import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 
 public class Main {
 
@@ -31,16 +33,37 @@ public class Main {
                     // Pull out 4 bytes and generate colour int;
                     // This entire statement depends on bytesPerPixel;
                     int pixelVal1 = Byte.toUnsignedInt(data[bI]);
-                    int pixelVal2 = Byte.toUnsignedInt(data[bI++]);
+                    int pixelVal2 = Byte.toUnsignedInt(data[bI+1]);
                     int pixelVal3 = Byte.toUnsignedInt(data[bI+2]);
                     int rgb=new Color(pixelVal1,pixelVal2,pixelVal3).getRGB();
                     image.setRGB(i, j, rgb);
-                    bI=bI+2;
+                    bI=bI+3;
                 }
             }
 
-            File outputfile = new File("image.jpg");
-            ImageIO.write(image, "jpg", outputfile);
+            File outputfile = new File("image.png");
+            ImageIO.write(image, "png", outputfile);
+
+            BufferedImage originalImage = null;
+            originalImage = ImageIO.read(new File("image.png"));
+
+            byte[] recoveredBytes = new byte[originalImage.getHeight()*originalImage.getWidth()*3];
+            bI=0;
+            for (int y = 0; y < originalImage.getHeight(); y++) {
+                for (int x = 0; x < originalImage.getWidth(); x++) {
+                    int  clr   = originalImage.getRGB(y,x);
+                    Color c = new Color(originalImage.getRGB(y,x));
+                    recoveredBytes[bI] = (byte) c.getRed();
+                    recoveredBytes[bI+1] = (byte) c.getGreen();
+                    recoveredBytes[bI+2] =  (byte) c.getBlue();
+                    originalImage.setRGB(y,x, clr);
+                    bI=bI+3;
+                }
+            }
+
+            FileOutputStream fos = new FileOutputStream("recovered.txt");
+            fos.write(recoveredBytes);
+            fos.close();
 
         } catch(Exception e) { System.out.println(e.getMessage());}
     }
