@@ -93,7 +93,7 @@ public class PNGSimple {
         } catch(Exception e) {}
     }
 
-    static void recoverFromImage(String imagePath,String recoveredPath)
+    static byte[] recoverFromImage(String imagePath)
     {
         try {
             Path path = Paths.get(imagePath);
@@ -123,10 +123,9 @@ public class PNGSimple {
             byte[] finalBytes = new byte[length-paddinglength];
             System.arraycopy(recoveredBytes, 3, finalBytes, 0, length-paddinglength);
 
+            return finalBytes;
+        }catch(Exception e) { System.out.println(e.getMessage());}
 
-            FileOutputStream fos = new FileOutputStream(recoveredPath);
-            fos.write(finalBytes);
-            fos.close();
-        }catch(Exception e) {}
+        return null;
     }
 }
