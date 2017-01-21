@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
+import java.security.SecureRandom;
 
 /**
  * Created by nathaniel on 1/20/17.
@@ -30,9 +31,9 @@ public class PNGSimple {
 
             // Value to index the byte[];
             int bI = 0;
-            int pI = 0;
             int paddingLength = width*height*3 - data.length;
             byte[] padding = ByteBuffer.allocate(4).putInt(paddingLength).array();
+            SecureRandom rnd = new SecureRandom();
 
             // Iterate through the pixel rows;
             for(int i = 0; i < height; i++) {
@@ -48,14 +49,11 @@ public class PNGSimple {
                         image.setRGB(j,i,rgb);
                     }
                     else {
-                        int pixelVal1 = bI < data.length ? Byte.toUnsignedInt(data[bI]) : Byte.toUnsignedInt(data[pI]);
-                        int pixelVal2 = bI + 1 < data.length ? Byte.toUnsignedInt(data[bI + 1]) : Byte.toUnsignedInt(data[pI + 1]);
-                        int pixelVal3 = bI + 2 < data.length ? Byte.toUnsignedInt(data[bI + 2]) : Byte.toUnsignedInt(data[pI + 2]);
+                        int pixelVal1 = bI < data.length ? Byte.toUnsignedInt(data[bI]) : Byte.toUnsignedInt(data[rnd.nextInt(data.length)]);
+                        int pixelVal2 = bI + 1 < data.length ? Byte.toUnsignedInt(data[bI + 1]) : Byte.toUnsignedInt(data[rnd.nextInt(data.length)]);
+                        int pixelVal3 = bI + 2 < data.length ? Byte.toUnsignedInt(data[bI + 2]) : Byte.toUnsignedInt(data[rnd.nextInt(data.length)]);
                         int rgb = new Color(pixelVal1, pixelVal2, pixelVal3).getRGB();
                         image.setRGB(j, i, rgb);
-                        if (bI + 2 >= data.length) {
-                            pI = pI + 3;
-                        }
                         if (bI + 2 < data.length) {
                             bI = bI + 3;
                         }
