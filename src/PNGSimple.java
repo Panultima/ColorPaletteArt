@@ -16,9 +16,10 @@ import java.security.SecureRandom;
  */
 public class PNGSimple {
 
-    static void writeToImage(byte[] data, String path)
+    static void writeToImage(byte[] data, String path, Boolean genRand)
     {
         try {
+            SecureRandom rnd = new SecureRandom();
             int height = (int) Math.ceil(Math.sqrt((data.length/3)+1));
             int width = height;
             while(width*height>(data.length/3)+1)
@@ -33,7 +34,8 @@ public class PNGSimple {
             int bI = 0;
             int paddingLength = width*height*3 - data.length;
             byte[] padding = ByteBuffer.allocate(4).putInt(paddingLength).array();
-            SecureRandom rnd = new SecureRandom();
+            int min = data[0];
+            int max = data[0];
 
             // Iterate through the pixel rows;
             for(int i = 0; i < height; i++) {
@@ -50,8 +52,14 @@ public class PNGSimple {
                     }
                     else {
                         int pixelVal1 = bI < data.length ? Byte.toUnsignedInt(data[bI]) : Byte.toUnsignedInt(data[rnd.nextInt(data.length)]);
+                        if(pixelVal1<min) {min=pixelVal1;}
+                        if(pixelVal1>max) {max=pixelVal1;}
                         int pixelVal2 = bI + 1 < data.length ? Byte.toUnsignedInt(data[bI + 1]) : Byte.toUnsignedInt(data[rnd.nextInt(data.length)]);
+                        if(pixelVal2<min) {min=pixelVal2;}
+                        if(pixelVal2>max) {max=pixelVal2;}
                         int pixelVal3 = bI + 2 < data.length ? Byte.toUnsignedInt(data[bI + 2]) : Byte.toUnsignedInt(data[rnd.nextInt(data.length)]);
+                        if(pixelVal3<min) {min=pixelVal3;}
+                        if(pixelVal3>max) {max=pixelVal3;}
                         int rgb = new Color(pixelVal1, pixelVal2, pixelVal3).getRGB();
                         image.setRGB(j, i, rgb);
                         if (bI + 2 < data.length) {
@@ -59,6 +67,25 @@ public class PNGSimple {
                         }
                     }
                 }
+            }
+
+            if(genRand)
+            {
+                BufferedImage rand = new BufferedImage(width,height,BufferedImage.TYPE_3BYTE_BGR);
+
+                for(int i = 0; i < height; i++) {
+                    // Iterate through the pixels in the row;
+                    for (int j = 0; j < width; j++) {
+                        int p1 = rnd.nextInt(max-min)+min;
+                        int p2 = rnd.nextInt(max-min)+min;
+                        int p3 = rnd.nextInt(max-min)+min;
+                        int rgb = new Color(p1, p2, p3).getRGB();
+                        rand.setRGB(j, i, rgb);
+                    }
+                }
+
+                File outputfile = new File("rand.png");
+                ImageIO.write(rand, "png", outputfile);
             }
 
             File outputfile = new File(path);

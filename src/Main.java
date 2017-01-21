@@ -9,10 +9,10 @@ public class Main {
 
         try {
 
-            Path path = Paths.get("/home/nathaniel/IdeaProjects/ColorPaletteArt/src/art.txt");
+            Path path = Paths.get("src/art.txt");
             byte[] data = Files.readAllBytes(path);
 
-            PNGSimple.writeToImage(data,"image.png");
+            PNGSimple.writeToImage(data,"image.png",true);
             PNGSimple.recoverFromImage("image.png","recovered.txt");
 
         } catch(Exception e) { System.out.println(e.getMessage());}
