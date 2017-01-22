@@ -9,9 +9,17 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Embed.PNGSimpleAES16("readingplan.pdf","keyimage.jpg","image.png");
+        if(args.length == 4) {
 
-        Retrieve.PNGSimpleAES16("image.png","keyimage.jpg","recovered.pdf");
+            if(args[0].equals("e")) {
+                Embed.PNGSimpleAES16(args[1], args[2], args[3]);
+            }
+
+            if(args[0].equals("r")) {
+                Retrieve.PNGSimpleAES16(args[1], args[2], args[3]);
+            }
+
+        }
 
     }
 }
