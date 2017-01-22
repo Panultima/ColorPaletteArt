@@ -7,7 +7,7 @@ import java.nio.file.Paths;
  */
 public class KeyGen {
 
-    public static byte[] getKeyFromFile(String dir)
+    public static byte[] getKeyFromFile16(String dir)
     {
         byte[] key = new byte[16];
 
