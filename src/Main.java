@@ -9,25 +9,9 @@ public class Main {
 
     public static void main(String[] args) {
 
-        try {
+        Embed.PNGSimpleAES16("readingplan.pdf","keyimage.jpg","image.png");
 
-            Path path = Paths.get("readingplan.pdf");
-            byte[] data = Files.readAllBytes(path);
+        Retrieve.PNGSimpleAES16("image.png","keyimage.jpg","recovered.pdf");
 
-            byte[] enc = Encrypt.AESEncrypt(data,KeyGen.getKeyFromFile16("keyimage.jpg"));
-
-            PNGSimple.writeToImage(enc,"image.png",true);
-            byte[] recovered = PNGSimple.recoverFromImage("image.png");
-
-            byte[] decrypted = Encrypt.AESDecrypt(recovered,KeyGen.getKeyFromFile16("keyimage.jpg"));
-
-
-            File someFile = new File("recovered.pdf");
-            FileOutputStream fos = new FileOutputStream(someFile);
-            fos.write(decrypted);
-            fos.flush();
-            fos.close();
-
-        } catch(Exception e) { System.out.println(e.getMessage());}
     }
 }
