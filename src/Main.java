@@ -11,18 +11,15 @@ public class Main {
 
         try {
 
-            byte[] key = new byte[16];
-            new Random().nextBytes(key);
-
             Path path = Paths.get("plain.txt");
             byte[] data = Files.readAllBytes(path);
 
-            byte[] enc = Encrypt.AESEncrypt(data,key);
+            byte[] enc = Encrypt.AESEncrypt(data,KeyGen.getKeyFromFile("keyimage.jpg"));
 
             PNGSimple.writeToImage(enc,"image.png",true);
             byte[] recovered = PNGSimple.recoverFromImage("image.png");
 
-            byte[] decrypted = Encrypt.AESDecrypt(recovered,key);
+            byte[] decrypted = Encrypt.AESDecrypt(recovered,KeyGen.getKeyFromFile("keyimage.jpg"));
 
             FileOutputStream fos = new FileOutputStream("recovered.txt");
             fos.write(decrypted);
