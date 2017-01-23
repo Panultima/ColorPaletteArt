@@ -9,14 +9,16 @@ public class Main {
 
     public static void main(String[] args) {
 
-        if(args.length == 4) {
+        if(args.length == 5) {
 
-            if(args[0].equals("e")) {
-                Embed.PNGSimpleAES16(args[1], args[2], args[3]);
-            }
+            if(args[0].equals("ps")) {
+                if (args[1].equals("e")) {
+                    Embed.PNGSimpleAES16(args[2], args[3], args[4]);
+                }
 
-            if(args[0].equals("r")) {
-                Retrieve.PNGSimpleAES16(args[1], args[2], args[3]);
+                if (args[1].equals("r")) {
+                    Retrieve.PNGSimpleAES16(args[2], args[3], args[4]);
+                }
             }
 
         }
