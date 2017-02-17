@@ -100,7 +100,7 @@ public class PNGSimple {
             byte[] data = Files.readAllBytes(path);
 
             BufferedImage originalImage = null;
-            originalImage = ImageIO.read(new File("image.png"));
+            originalImage = ImageIO.read(new File(imagePath));
 
             byte[] recoveredBytes = new byte[originalImage.getHeight() * originalImage.getWidth() * 3];
             int bI = 0;

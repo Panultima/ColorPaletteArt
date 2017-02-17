@@ -11,7 +11,7 @@ public class Main {
 
         if(args.length < 10) {
 
-            if(args[0].equals("ps")) {
+            if(args[0].equals("rd")) {
                 if (args[1].equals("e")) {
                     Embed.PNGSimpleAES16(args[2], args[3], args[4]);
                 }
@@ -21,23 +21,13 @@ public class Main {
                 }
             }
 
-            if(args[0].equals("p")) {
+            if(args[0].equals("lsb")) {
                 if (args[1].equals("e")) {
                     Embed.PNGAES16(args[2], args[3], args[4],args[5]);
                 }
 
                 if (args[1].equals("r")) {
                     Retrieve.PNGAES16(args[2], args[3], args[4]);
-                }
-            }
-
-            if(args[0].equals("j")) {
-                if (args[1].equals("e")) {
-                    Embed.JPGAES16(args[2], args[3], args[4],args[5]);
-                }
-
-                if (args[1].equals("r")) {
-                    Retrieve.JPGAES16(args[2], args[3], args[4]);
                 }
             }
 
