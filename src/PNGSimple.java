@@ -2,6 +2,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
@@ -10,13 +11,36 @@ import java.nio.file.Paths;
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.security.SecureRandom;
+import java.util.Random;
 
 /**
  * Created by nathaniel on 1/20/17.
  */
 public class PNGSimple {
 
-    static void writeToImage(byte[] data, String path, Boolean genRand)
+    static void genRandom() throws IOException {
+        SecureRandom ran = new SecureRandom();
+        int width = ran.nextInt(1000) + 100;
+        int height = width;
+
+        BufferedImage rand = new BufferedImage(width,height,BufferedImage.TYPE_3BYTE_BGR);
+
+        for(int i = 0; i < height; i++) {
+            // Iterate through the pixels in the row;
+            for (int j = 0; j < width; j++) {
+                int p1 = ran.nextInt(255);
+                int p2 = ran.nextInt(255);
+                int p3 = ran.nextInt(255);
+                int rgb = new Color(p1, p2, p3).getRGB();
+                rand.setRGB(j, i, rgb);
+            }
+        }
+
+        File outputfile = new File("colorpalette.png");
+        ImageIO.write(rand, "png", outputfile);
+    }
+
+    static void writeToImage(byte[] data, String path)
     {
         try {
             SecureRandom rnd = new SecureRandom();
@@ -67,25 +91,6 @@ public class PNGSimple {
                         }
                     }
                 }
-            }
-
-            if(genRand)
-            {
-                BufferedImage rand = new BufferedImage(width,height,BufferedImage.TYPE_3BYTE_BGR);
-
-                for(int i = 0; i < height; i++) {
-                    // Iterate through the pixels in the row;
-                    for (int j = 0; j < width; j++) {
-                        int p1 = rnd.nextInt(max-min)+min;
-                        int p2 = rnd.nextInt(max-min)+min;
-                        int p3 = rnd.nextInt(max-min)+min;
-                        int rgb = new Color(p1, p2, p3).getRGB();
-                        rand.setRGB(j, i, rgb);
-                    }
-                }
-
-                File outputfile = new File("rand.png");
-                ImageIO.write(rand, "png", outputfile);
             }
 
             File outputfile = new File(path);

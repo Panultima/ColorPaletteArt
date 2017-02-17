@@ -9,7 +9,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        if(args.length < 10) {
+        if(args.length == 4 || args.length == 5) {
 
             if(args[0].equals("rd")) {
 
@@ -54,6 +54,12 @@ public class Main {
                 }
             }
 
+        }
+        else
+        {
+            try {
+                PNGSimple.genRandom();
+            } catch(Exception e) { }
         }
 
     }
