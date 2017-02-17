@@ -4,6 +4,7 @@ import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 
 /**
  * Created by Grandpa on 2/17/2017.
@@ -18,10 +19,18 @@ public class PNG {
         return bytes;
     }
 
-    static void writeToImage(byte[] data, String path)
+    private static int bytesToInt(byte[] bytes, int numBytes) {
+        int num = 0;
+        for (int i = 0; i < numBytes; i += 1) {
+            num |= (bytes[i] & 0xFF) << (8 * i);
+        }
+        return num;
+    }
+
+    static void writeToImage(byte[] data, String path, String outpath)
     {
         BufferedImage im = null;
-        File encryptedFile = null;
+        File encryptedFile = new File(outpath);
         try {
             im = ImageIO.read(new File(path));
             WritableRaster raster = im.getRaster();
@@ -30,7 +39,7 @@ public class PNG {
             byte[] writableBytes = buffer.getData();
 
             int header = data.length;
-            byte[] lenBytes = intToBytes(header, 4);
+            byte[] lenBytes = intToBytes(header,4);
             int totalLen = 4 + data.length;
             byte[] bytesToHide = new byte[totalLen];
 
@@ -45,8 +54,6 @@ public class PNG {
             int offset = 0;
             for (int i = 0; i < bytesToHide.length; i += 1) {
                 byte b = bytesToHide[i];
-                System.out.print(b);
-                System.out.print(' ');
                 for (int j = 0; j < 8; j += 1) {
                     int bit = (b >> j) & 1;
                     writableBytes[offset] = (byte) ((writableBytes[offset] & 0xFE) | bit);
@@ -56,7 +63,7 @@ public class PNG {
             ImageIO.write(im, "png", encryptedFile);
 
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -72,18 +79,17 @@ public class PNG {
 
             int len = 0;
             int offset = 0;
+            byte[] lendata = new byte[4];
 
-            for (int i = 0; i < 4; i += 1) { // read length header (4 bytes)
+            for (int i = 0; i < 4; i += 1) {
                 byte b = 0;
                 for (int j = 0; j < 8; j += 1) {
                     b |= (data[offset] & 1) << j;
                     offset += 1;
                 }
-                System.out.print(b);
-                System.out.print(' ');
-                len |= b << (8 * i);
+                lendata[i] = b;
             }
-
+            len = bytesToInt(lendata,4);
             hiddenBytes = new byte[len];
             for (int i = 0; i < len; i += 1) {
                 byte b = 0;
@@ -95,6 +101,7 @@ public class PNG {
             }
 
         } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
 
         return hiddenBytes;

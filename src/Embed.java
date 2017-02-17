@@ -19,7 +19,7 @@ public class Embed {
         } catch(Exception e) {}
     }
 
-    public static void PNGAES16(String filepath, String keyfilepath, String imagepath)
+    public static void PNGAES16(String filepath, String keyfilepath, String imagepath, String outputimagepath)
     {
         try {
             Path path = Paths.get(filepath);
@@ -27,7 +27,7 @@ public class Embed {
 
             byte[] enc = Encrypt.AESEncrypt(data, KeyGen.getKeyFromFile16(keyfilepath));
 
-            PNG.writeToImage(enc, imagepath);
+            PNG.writeToImage(enc, imagepath, outputimagepath);
         } catch(Exception e) {}
     }
 }
