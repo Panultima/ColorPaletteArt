@@ -10,12 +10,24 @@ public class Embed {
     public static void PNGSimpleAES16(String filepath, String keyfilepath, String imagepath)
     {
         try {
-            Path path = Paths.get("readingplan.pdf");
+            Path path = Paths.get(filepath);
             byte[] data = Files.readAllBytes(path);
 
-            byte[] enc = Encrypt.AESEncrypt(data, KeyGen.getKeyFromFile16("keyimage.jpg"));
+            byte[] enc = Encrypt.AESEncrypt(data, KeyGen.getKeyFromFile16(keyfilepath));
 
-            PNGSimple.writeToImage(enc, "image.png", true);
+            PNGSimple.writeToImage(enc, imagepath, true);
+        } catch(Exception e) {}
+    }
+
+    public static void PNGAES16(String filepath, String keyfilepath, String imagepath)
+    {
+        try {
+            Path path = Paths.get(filepath);
+            byte[] data = Files.readAllBytes(path);
+
+            byte[] enc = Encrypt.AESEncrypt(data, KeyGen.getKeyFromFile16(keyfilepath));
+
+            PNG.writeToImage(enc, imagepath);
         } catch(Exception e) {}
     }
 }
