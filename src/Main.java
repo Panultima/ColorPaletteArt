@@ -33,11 +33,11 @@ public class Main {
 
             if(args[0].equals("j")) {
                 if (args[1].equals("e")) {
-                    Embed.PNGAES16(args[2], args[3], args[4],args[5]);
+                    Embed.JPGAES16(args[2], args[3], args[4],args[5]);
                 }
 
                 if (args[1].equals("r")) {
-                    Retrieve.PNGAES16(args[2], args[3], args[4]);
+                    Retrieve.JPGAES16(args[2], args[3], args[4]);
                 }
             }
 

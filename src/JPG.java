@@ -1,12 +1,13 @@
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
+import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
-import java.io.FileInputStream;
-import java.io.FileWriter;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.stream.FileImageOutputStream;
+import javax.imageio.stream.ImageOutputStream;
 import java.awt.Color;
 import java.util.*;
 
@@ -64,7 +65,18 @@ public class JPG {
                     offset += 1;
                 }
             }
-            ImageIO.write(im, "jpg", encryptedFile);
+
+            ImageWriter jpgWriter = ImageIO.getImageWritersByFormatName("jpg").next();
+            ImageWriteParam jpgWriteParam = jpgWriter.getDefaultWriteParam();
+            jpgWriteParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+            jpgWriteParam.setCompressionQuality(0.7f);
+
+            ImageOutputStream outputStream = new FileImageOutputStream(encryptedFile); // For example implementations see below
+            jpgWriter.setOutput(outputStream);
+            IIOImage outputImage = new IIOImage(im, null, null);
+            jpgWriter.write(null, outputImage, jpgWriteParam);
+            jpgWriter.dispose();
+            //ImageIO.write(im, "jpg", encryptedFile);
 
         } catch (IOException e) {
             System.out.println(e.getMessage());

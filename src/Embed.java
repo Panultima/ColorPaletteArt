@@ -30,4 +30,16 @@ public class Embed {
             PNG.writeToImage(enc, imagepath, outputimagepath);
         } catch(Exception e) {}
     }
+
+    public static void JPGAES16(String filepath, String keyfilepath, String imagepath, String outputimagepath)
+    {
+        try {
+            Path path = Paths.get(filepath);
+            byte[] data = Files.readAllBytes(path);
+
+            byte[] enc = Encrypt.AESEncrypt(data, KeyGen.getKeyFromFile16(keyfilepath));
+
+            JPG.writeToImage(enc, imagepath, outputimagepath);
+        } catch(Exception e) {}
+    }
 }
