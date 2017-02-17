@@ -2,7 +2,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        if(args.length == 4 || args.length == 5) {
+        if(args.length == 5 || args.length == 6) {
 
             if(args[0].equals("rd")) {
 
