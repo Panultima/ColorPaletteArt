@@ -1,21 +1,14 @@
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.security.SecureRandom;
-import javax.crypto.*;
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import java.security.SecureRandom;
 
 /**
  * Created by nathaniel on 1/21/17.
  */
 public class Encrypt {
 
-    /**
-     *
-     * @param databytes
-     * @param key
-     * @return
-     */
     public static byte[] AESEncrypt(byte[] databytes, byte[] key)
     {
         try {

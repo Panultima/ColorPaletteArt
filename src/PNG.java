@@ -4,11 +4,7 @@ import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
-import java.nio.ByteBuffer;
 
-/**
- * Created by Grandpa on 2/17/2017.
- */
 public class PNG {
 
     private static byte[] intToBytes(int num, int numBytes) {

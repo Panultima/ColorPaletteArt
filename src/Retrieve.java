@@ -1,9 +1,6 @@
 import java.io.File;
 import java.io.FileOutputStream;
 
-/**
- * Created by nathaniel on 1/22/17.
- */
 public class Retrieve {
 
     public static void PNGSimpleAES16(String imagepath, String keyimagepath, String outputpath)

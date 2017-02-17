@@ -2,9 +2,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-/**
- * Created by nathaniel on 1/22/17.
- */
 public class Embed {
 
     public static void PNGSimpleAES16(String filepath, String keyfilepath, String imagepath)

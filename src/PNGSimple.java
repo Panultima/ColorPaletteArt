@@ -8,14 +8,8 @@ import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
 import java.security.SecureRandom;
-import java.util.Random;
 
-/**
- * Created by nathaniel on 1/20/17.
- */
 public class PNGSimple {
 
     static void genRandom() throws IOException {
