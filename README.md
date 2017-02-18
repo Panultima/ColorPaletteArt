@@ -15,3 +15,5 @@ Both modes use a key image for encryption and use AES 256 bit symmetric key encr
 # Next Steps
 
 Need to create a true JPG class that uses DCT (Discrete Cosine Transform) coefficients for embedding the data
+
+Perhaps add a hash of the encrypted data into the embedded data so that it can be verified upon retrieval
