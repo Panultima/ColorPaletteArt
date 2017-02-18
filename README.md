@@ -12,7 +12,7 @@ fakes it by using LSB like with a png and storing it as a jpg.
 
 Both modes use a key image for encryption and use AES 256 bit symmetric key encryption. 
 
-If you do not enter in a valid # of arguments the jar automatically produces a randomly sized random color palette png. This is its 'disguise'. 
+If you do not enter in a valid # of arguments the program automatically produces a randomly sized random color palette png. This is its 'disguise'. 
 
 # Next Steps
 
