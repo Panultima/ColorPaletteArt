@@ -2,7 +2,7 @@
 
 So, currently there are two main modes - 'rnd' and 'lsb'. 
 
-'rnd' encrypts the bytes of the file and pads it so it is a perfect square. It then raws it as a png image of colors
+'rnd' encrypts the bytes of the file and pads it so it is a perfect square. It then writes it as a png image of colors
 associated with the encrypted values. This function uses the 'PNGSimple' class.
 
 'lsb' does the traditional embedding inside of the last bit of every byte of the image. This function uses the 'PNG' class. 
