@@ -1,9 +1,8 @@
 # ColorPaletteArt
 
-Some simple fun with steganography - embedding files inside images and then recovering said files. Currently there are two main modes - 'rnd' and 'lsb'. 
+Some simple fun with steganography - embedding files inside images and then recovering said files. This code was written from scratch for personal enjoyment - do not misuse or use in sensitive contexts.  
 
-'rnd' encrypts the bytes of the file and pads it so it is a perfect square. It then writes it as a png image of colors
-associated with the encrypted values. This function uses the 'PNGSimple' class.
+Currently there are two main modes - 'rnd' and 'lsb'. 'rnd' encrypts the bytes of the file and pads it so it is a perfect square. It then writes it as a png image of colors associated with the encrypted values. This function uses the 'PNGSimple' class.
 
 'lsb' does the traditional embedding inside of the last bit of every byte of the image. This function uses the 'PNG' class. 
 Even though it writes the data as a 'png', if you pass it an output file name such as 'myjpg.jpg' it will save it as a jpg,
