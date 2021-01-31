@@ -22,7 +22,7 @@ Below are the commands to embed/recover in both the 'rd' and 'lsb' modes. For 'l
 - java -cp [classpath] Main lsb e files/idea_checklist.pdf files/keyimage.jpg files/Forest.png out.png
 - java -cp [classpath] Main lsb r out.png files/keyimage.jpg out.pdf (make sure file extension is correct here)
 
-You can also use java -jar ColorPaletteArt.jar in place of 'java -cp [classpath] Main'
+You can also use 'java -jar ColorPaletteArt.jar' in place of 'java -cp [classpath] Main'
 
 #### Possible Next Steps
 
